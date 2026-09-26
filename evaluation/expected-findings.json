@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "sample_id": "facturaya-v1",
-  "snapshot_sha256": "efc33faf905e82057ff2637ca904774823935d9d3fec163ab45b5e8025278fd9",
+  "snapshot_sha256": "f4fbb8852312b9cdcabb87c3bb928d59bc4441e79f21ed4e8443459338dac014",
   "findings": [
     {
       "id": "EF-1",
