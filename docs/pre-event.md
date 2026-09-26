@@ -1,5 +1,5 @@
-# Material previo
+# Benchmark Context and Pre-Event Notice
 
-Fecha de preparación: 24 de septiembre de 2026. Material creado: aplicación FacturaYa de muestra, datos sintéticos reproducibles, pruebas, documentación y paquete de entrada. No se afirma que un evento permita expresamente este material ni que imponga una licencia; esas condiciones requieren confirmación independiente.
+Preparation date: September 24, 2026. Material created: FacturaYa sample application, reproducible synthetic dataset, characterization tests, technical documentation, and input packaging scripts. No claim is made that any specific event explicitly licenses or endorses this material; such terms require independent confirmation.
 
-Aviso: aplicación deliberadamente vulnerable para evaluación local con datos sintéticos.
+Notice: Deliberately vulnerable application designed for local evaluation with synthetic data.

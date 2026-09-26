@@ -21,7 +21,8 @@ def snapshot_sha256():
     digest = hashlib.sha256()
     for path in source_paths():
         relative = path.relative_to(ROOT).as_posix()
-        file_hash = hashlib.sha256(path.read_bytes()).hexdigest()
+        normalized_bytes = path.read_bytes().replace(b"\r\n", b"\n")
+        file_hash = hashlib.sha256(normalized_bytes).hexdigest()
         digest.update(relative.encode("utf-8") + b"\0" + file_hash.encode("ascii") + b"\n")
     return digest.hexdigest()
 

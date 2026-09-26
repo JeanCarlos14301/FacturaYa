@@ -1,8 +1,8 @@
-# Arquitectura observada
+# Observed Architecture
 
 ```mermaid
 flowchart LR
-  browser[Navegador / cliente HTTP] --> app[app.py: rutas y HTML/JSON]
+  browser[Browser / HTTP Client] --> app[app.py: Routes and HTML/JSON]
   app --> auth[auth.py]
   app --> billing[billing.py]
   app --> customers[customers.py]
@@ -23,6 +23,6 @@ erDiagram
   invoices ||--|{ invoice_items : contains
 ```
 
-Consulta JSON: `GET /invoices/{id}` → `auth.login_required` → `db.invoice_by_id` → `db.invoice_items` → conversión de importes con `utils.amount` → JSON. El mismo identificador sirve para la vista HTML con sufijo `/view`.
+JSON Query Flow: `GET /invoices/{id}` → `auth.login_required` → `db.invoice_by_id` → `db.invoice_items` → amount conversion via `utils.amount` → JSON response. The same identifier is used for the HTML rendering with the `/view` suffix.
 
-Los importes se almacenan como texto decimal y se convierten con `Decimal`. Cada precio unitario tiene dos decimales; la línea es `cantidad × precio`, redondeada a centavos con `ROUND_HALF_UP`. El subtotal suma líneas. Si alcanza 100.00, el descuento de facturación es `subtotal × 0.075`, redondeado una sola vez a centavos. El total es `subtotal − descuento`.
+Monetary amounts are stored as decimal text and parsed with `Decimal`. Each unit price has two decimal places; line totals are computed as `quantity × unit_price`, rounded to cents using `ROUND_HALF_UP`. The subtotal sums all line totals. If the subtotal reaches 100.00, the billing discount is calculated as `subtotal × 0.075`, rounded once to cents. The final total is `subtotal - discount`.

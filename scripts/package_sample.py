@@ -1,4 +1,4 @@
-"""Create a byte-for-byte reproducible LegacyLens input archive."""
+"""Create a byte-for-byte reproducible CodeArchaeologist input archive."""
 import argparse
 import zipfile
 from pathlib import Path
@@ -24,7 +24,8 @@ def package(destination):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("output", nargs="?", default=str(ROOT / "dist" / "facturaya-v1.zip"))
+    parser = argparse.ArgumentParser(description="Package sample into reproducible zip archive")
+    parser.add_argument("output", nargs="?", default=str(ROOT / "dist" / "facturaya-v1.zip"),
+                        help="Target archive destination path")
     args = parser.parse_args()
     print(f"Packaged {len(package(args.output))} files: {args.output}")

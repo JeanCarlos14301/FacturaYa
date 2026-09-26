@@ -1,24 +1,27 @@
 # FacturaYa
 
-Aplicación heredada ficticia de facturación para evaluar LegacyLens. Incluye datos reproducibles, pruebas de caracterización y un contrato para una migración futura. **Aplicación deliberadamente vulnerable para evaluación local con datos sintéticos.**
+A fictitious legacy billing application designed as a reference benchmark for **CodeArchaeologist AI**. Includes reproducible synthetic seed data, characterization test suites, and target contracts for legacy modernization. **This application is deliberately vulnerable and architecturally flawed for local evaluation with synthetic data.**
 
-## Preparar y ejecutar
+## Setup and Execution
 
-Se requiere Python 3.11. Compruebe `py -3.11 --version` (o use la ruta completa de su intérprete 3.11). En PowerShell, desde la raíz del repositorio:
+Python 3.11+ is required. Check your version with `python --version` (or use the full path to your Python interpreter). In PowerShell, run from the repository root:
 
 ```powershell
-py -3.11 -m venv .venv
+python -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
 .\.venv\Scripts\python.exe samples/facturaya-v1/seed.py samples/facturaya-v1/facturaya.sqlite3
 $env:FACTURAYA_DB = (Resolve-Path samples/facturaya-v1/facturaya.sqlite3).Path
 .\.venv\Scripts\python.exe -m flask --app samples/facturaya-v1/app.py run --host 127.0.0.1
 ```
 
-El depurador está desactivado por defecto. Para repetir el seed sobre la misma ruta, añada `--reset`; sin él, el script rechaza sobrescribirla.
+The debugger is disabled by default. To re-seed into an existing database file, pass `--reset`; otherwise, the seed script rejects overwriting the file.
 
-Cuentas ficticias: `ana` / `DemoAna!2024`, `bruno` / `DemoBruno!2024`, `carla` / `DemoCarla!2024`.
+Synthetic demo credentials:
+- `ana` / `DemoAna!2024`
+- `bruno` / `DemoBruno!2024`
+- `carla` / `DemoCarla!2024`
 
-## Consultar por HTTP
+## HTTP Testing Examples
 
 ```powershell
 curl.exe -c session.txt -d "username=ana&password=DemoAna!2024" http://127.0.0.1:5000/login
@@ -29,9 +32,9 @@ curl.exe -b session.txt "http://127.0.0.1:5000/reports/monthly?month=2024-01"
 curl.exe -b session.txt -X POST http://127.0.0.1:5000/logout
 ```
 
-El formulario `/invoices/new` acepta un cliente propio, fecha, estado y varios ítems. Las páginas `/customers` y `/invoices` requieren sesión.
+The `/invoices/new` form allows creating invoices for owned customers with a date, status, and multiple line items. The `/customers` and `/invoices` pages require an authenticated session.
 
-## Pruebas y paquete
+## Testing and Packaging
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q
@@ -39,6 +42,7 @@ El formulario `/invoices/new` acepta un cliente propio, fecha, estado y varios �
 .\.venv\Scripts\python.exe scripts/package_sample.py
 ```
 
-El ZIP queda en `dist/facturaya-v1.zip`; contiene solo el código y recursos necesarios para inicializar y ejecutar la muestra. Extraiga el ZIP, instale `requirements.txt` y ejecute `seed.py` y `flask run` desde `facturaya-v1`.
+The sample archive is generated at `dist/facturaya-v1.zip`. It contains only the code and resources required to initialize and run the benchmark sample. To run the packaged standalone app, extract the ZIP, install `requirements.txt`, run `seed.py`, and launch with `flask run` from within `facturaya-v1`.
 
-Las comprobaciones en `test_known_legacy_behavior.py` caracterizan comportamiento heredado inseguro; su éxito no implica seguridad. La evaluación reservada se conserva por separado del paquete de entrada.
+> [!NOTE]
+> Tests in `test_known_legacy_behavior.py` characterize known insecure legacy behaviors (such as SQL injection and broken object authorization); their success confirms legacy behavior reproducibility and does not imply security.

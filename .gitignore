@@ -1,8 +1,24 @@
+# Python virtual environments and caches
 .venv/
 __pycache__/
-.pytest_cache/
 *.pyc
+
+# Testing and coverage caches
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local databases and build distributions
 *.sqlite3
 *.db
 dist/
 *.zip
+session.txt
+*.tmp
+
+# IDE and OS metadata
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
